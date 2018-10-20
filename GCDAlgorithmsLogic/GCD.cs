@@ -1,23 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace GCDAlgorithmsLogic
 {
     /// <summary>
-    /// 
+    /// Represents a class for finding the greatest common divisor by Euclide's and Stain's algorithms.
     /// </summary>
     public static class GCD
     {
         /// <summary>
-        /// 
+        /// Performs finding the greatest common divisor by Euclide's algorithm.
         /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        public static int FindGCDByEuclide(params int[] numbers)
+        /// <param name="numbers">
+        /// Numbers for for which the greatest common divisor will be find.
+        /// </param>
+        /// <returns>
+        /// A 2-tuple as a value type with two field:
+        /// gcd - the greatest common for input numbers
+        /// executionTime - the total elapsed time measured by the current instance, in timer ticks.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when input data is null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when:
+        /// Input data contains zero.
+        /// Input data contains less than two numbers.
+        /// </exception>
+        public static (int gcd, long executionTime) FindGCDByEuclide(params int[] numbers)
         {
+            var counterTime = Stopwatch.StartNew();
+
             CheckInputData(numbers);
 
             int interimGCD = FindGCDByEuclide(numbers[0], numbers[1]);
@@ -28,16 +41,37 @@ namespace GCDAlgorithmsLogic
                 interimGCD = FindGCDByEuclide(interimGCD, numbers[indexOfNextNumber++]);
             }
 
-            return interimGCD;
+            counterTime.Stop();
+
+            long spendingTime = counterTime.ElapsedTicks;
+            var result = (gcd: interimGCD, executionTime: spendingTime);
+
+            return result;
         }
 
         /// <summary>
-        /// 
+        /// Performs finding the greatest common divisor by Stain's algorithm.
         /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        public static int FindGCDByStain(params int[] numbers)
+        /// <param name="numbers">
+        /// Numbers for for which the greatest common divisor will be find.
+        /// </param>
+        /// <returns>
+        /// A 2-tuple as a value type with two field:
+        /// gcd - the greatest common for input numbers
+        /// executionTime - the total elapsed time measured by the current instance, in timer ticks.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when input data is null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when:
+        /// Input data contains zero.
+        /// Input data contains less than two numbers.
+        /// </exception>
+        public static (int gcd, long executionTime) FindGCDByStain(params int[] numbers)
         {
+            var counterTime = Stopwatch.StartNew();
+
             CheckInputData(numbers);
 
             int interimGCD = FindGCDByEuclide(numbers[0], numbers[1]);
@@ -48,7 +82,41 @@ namespace GCDAlgorithmsLogic
                 interimGCD = FindGCDByStain(interimGCD, numbers[indexOfNextNumber++]);
             }
 
-            return interimGCD;
+            counterTime.Stop();
+           
+            long spendingTime = counterTime.ElapsedTicks;
+            var result = (gcd: interimGCD, executionTime: spendingTime);
+
+            return result;          
+        }
+
+        /// <summary>
+        /// Performs finding the greatest common divisor by  Euclide's and Stain's algorithms and in result gives the time of their execution.
+        /// </summary>
+        /// <param name="euclideTimeExecution">
+        /// The total elapsed time measured by the current instance, in timer ticks for  Euclide's algorithm</param>
+        /// <param name="stainTimeExecution">
+        /// The total elapsed time measured by the current instance, in timer ticks for  Stain's algorithm</param>
+        /// <param name="numbers">
+        /// Numbers for for which the time execution will be find.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when input data is null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when:
+        /// Input data contains zero.
+        /// Input data contains less than two numbers.
+        /// </exception>
+        public static void TakeTimeExecution(out long euclideTimeExecution, out long stainTimeExecution, params int[] numbers)
+        {
+            // TODO ask about this: should I call it? Due to the fact this method will be call again in next two methods.
+            CheckInputData(numbers);
+
+            var euclideResult = FindGCDByEuclide(numbers);
+            var stainResult = FindGCDByStain(numbers);
+
+            euclideTimeExecution = euclideResult.executionTime;
+            stainTimeExecution = euclideResult.gcd;
         }
 
         private static int FindGCDByStain(int firstNumber, int secondNumber)
