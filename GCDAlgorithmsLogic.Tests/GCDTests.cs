@@ -22,17 +22,17 @@ namespace GCDAlgorithmsLogic.Tests
         [TestCase(1044, 1512, 1512, 2436, 1044, 2436, ExpectedResult = 12)]
         public int FindGCDByEuclide_PassCorrectRepeatingNumbers_ReturnedGCD(params int[] numbers)
             => GCD.FindGCDByEuclide(numbers).gcd;
-
-
+        
         [TestCase(945, -301, ExpectedResult = 7)]
         [TestCase(-1044, -1512,  -2436, ExpectedResult = 12)]
         public int FindGCDByEuclide_PassCorrectNegativeNumbers_ReturnedGCD(params int[] numbers)
             => GCD.FindGCDByEuclide(numbers).gcd;
 
-        [TestCase()]
-        public void FindGCDByEuclide_PassNullValue_ThrownArgumentException(params int[] numbers)
+        //Ask aout this test.
+        [TestCase]
+        public void FindGCDByEuclide_PassNullValue_ThrownArgumentNullException()
         {
-            Assert.Throws<ArgumentException>(() => GCD.FindGCDByEuclide(numbers));
+            Assert.Throws<ArgumentNullException>(() => GCD.FindGCDByEuclide(null));
         }             
 
         [TestCase(945)]
@@ -63,10 +63,10 @@ namespace GCDAlgorithmsLogic.Tests
         public int FindGCDByStain_PassCorrectNegativeNumbers_ReturnedGCD(params int[] numbers)
             => GCD.FindGCDByStain(numbers).gcd;
 
-        [TestCase()]
-        public void FindGCDByStain_PassNullValue_ThrownArgumentException(params int[] numbers)
+        [TestCase]
+        public void FindGCDByStain_PassNullValue_ThrownArgumentNullException()
         {
-            Assert.Throws<ArgumentException>(() => GCD.FindGCDByEuclide(numbers));
+            Assert.Throws<ArgumentNullException>(() => GCD.FindGCDByEuclide(null));
         }
 
         [TestCase(945)]
