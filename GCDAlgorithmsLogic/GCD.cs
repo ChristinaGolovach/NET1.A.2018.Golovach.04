@@ -60,9 +60,6 @@ namespace GCDAlgorithmsLogic
         /// gcd - the greatest common for input numbers
         /// executionTime - the total elapsed time measured by the current instance, in timer ticks.
         /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when input data is null
-        /// </exception>
         /// <exception cref="ArgumentException">
         /// Thrown when:
         /// Input data contains zero.
@@ -99,9 +96,6 @@ namespace GCDAlgorithmsLogic
         /// The total elapsed time measured by the current instance, in timer ticks for  Stain's algorithm</param>
         /// <param name="numbers">
         /// Numbers for for which the time execution will be find.</param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when input data is null
-        /// </exception>
         /// <exception cref="ArgumentException">
         /// Thrown when:
         /// Input data contains zero.
@@ -188,13 +182,8 @@ namespace GCDAlgorithmsLogic
             secondNumber = Math.Abs(secondNumber);
         }
 
-        private static void CheckInputData(int[] numbers)
+        private static void CheckInputData(params int[] numbers)
         {
-            if (numbers == null)
-            {
-                throw new ArgumentNullException($"The {nameof(numbers)} can not be null.");
-            }
-
             if (numbers.Length < 2)
             {
                 throw new ArgumentException($"Unable to find GCD for single number. The length of {nameof(numbers)} must be more than 2.");
