@@ -94,7 +94,6 @@ namespace GCDAlgorithmsLogic.Tests
             Assert.IsTrue(euclideTimeExecution > 0);
             Assert.IsTrue(stainTimeExecution > 0);
         }
-
         #endregion
     }
 }

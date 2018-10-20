@@ -94,13 +94,13 @@ namespace GCDAlgorithmsLogic
         /// Performs finding the greatest common divisor by  Euclide's and Stain's algorithms and in result gives the time of their execution.
         /// </summary>
         /// <param name="euclideTimeExecution">
-        /// The total elapsed time measured by the current instance, in timer ticks for  Euclide's algorithm</param>
+        /// The total elapsed time measured by the current instance, in timer ticks for  Euclide's algorithm.</param>
         /// <param name="stainTimeExecution">
-        /// The total elapsed time measured by the current instance, in timer ticks for  Stain's algorithm</param>
+        /// The total elapsed time measured by the current instance, in timer ticks for  Stain's algorithm.</param>
         /// <param name="numbers">
         /// Numbers for for which the time execution will be find.</param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown when input data is null
+        /// Thrown when input data is null.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// Thrown when:
