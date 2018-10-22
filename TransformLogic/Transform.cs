@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text;
 using System.Threading;
+using DoubleExtensionLogic;
 
 namespace TransformLogic
 {
@@ -33,6 +34,36 @@ namespace TransformLogic
             foreach (double number in numbers)
             {
                 numbersInWordsView[i] = TransformDoubleToWord(number);
+                i++;
+            }
+
+            return numbersInWordsView;
+        }
+
+        /// <summary>
+        /// Performs the transforming array of double numbers to string array of words in IEEE754 format.  
+        /// </summary>
+        /// <param name="numbers">
+        /// The array for which the transforming will be executed.</param>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the input array is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the input array is empty.
+        /// </exception>
+        public static string[] TransformToIEEEFormat(double[] numbers)
+        {
+            CheckInputArray(numbers);
+
+            int i = 0;
+            string[] numbersInWordsView = new string[numbers.Length];
+
+            foreach (double number in numbers)
+            {
+
+                numbersInWordsView[i] = number.DoubleToIEEE754();
                 i++;
             }
 

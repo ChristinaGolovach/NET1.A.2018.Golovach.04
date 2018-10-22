@@ -43,5 +43,11 @@
     <Compile Include="Transform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DoubleExtensionLogic\DoubleExtensionLogic.csproj">
+      <Project>{aa0cbc03-0b35-4fed-b005-e75314f525da}</Project>
+      <Name>DoubleExtensionLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
