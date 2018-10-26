@@ -1,4 +1,12 @@
 # NET1.A.2018.Golovach.04
+
+# Измененя
+- проект TransformLogic - изменена архитектура: добавлен ITransformer и два имплементирующих класса; []char -> string. 
+- проект TransformLogic.Tests - добавлены новые тесты.
+- проект DoubleExtensionLogic - static readonly  -> sizeof(double)
+- проект GCDAlgorithmsLogic - дабвлены новые перегрузки для поиска НОД; Изменен метод для подсчета времени работы для двух алгоритмов.
+- проект GCDAlgorithmsLogic.Tests - добавлены новые тесты.
+
 # Задание
 1. (deadline 18.10.2018, 24.00) Реализовать метод TransformToWords который принимает массив вещественных чисел и трансформирует его в массив строк таким образом, чтобы каждое вещественное число преобразовывалось в его "словестный формат" (LINQ-запросы не использовать!). Например, FilterDigit (-23.809, 0.295, 15.17) -> {"minus two three point eight zero nine", "zero point two nine five", "one five point one seven"}. 
 Разработать модульные тесты (NUnit или MS Unit Test) для тестирования метода.
