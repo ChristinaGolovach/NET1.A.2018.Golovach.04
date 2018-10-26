@@ -9,42 +9,272 @@ namespace GCDAlgorithmsLogic
     public static class GCD
     {
         /// <summary>
+        /// Performs finding the greatest common divisor by Euclide's and Stain's algorithms and in result gives the time of their execution.
+        /// </summary>
+        /// <param name="euclideTime">
+        /// The total elapsed time measured in timer ticks for  Euclide's algorithm.</param>
+        /// <param name="stainTimeExecution">
+        /// The total elapsed time measured  in timer ticks for  Stain's algorithm.</param>
+        /// <param name="numbers">
+        /// Numbers for for which the time execution will be find.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when input data is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when input data contains less than two numbers.
+        /// </exception>
+        public static void TakeTimeExecutionForTwoAlgorithms(out long euclideTime, out long stainTime, params int[] numbers)
+        {
+            CheckInputData(numbers);
+
+            var counterEuclideTime = Stopwatch.StartNew();
+
+            CoreFindGCDByEuclideArray(numbers);
+
+            euclideTime = counterEuclideTime.ElapsedTicks;
+
+            var counterStainTime = Stopwatch.StartNew();
+
+            CoreFindGCDByStainForArray(numbers);
+
+            stainTime = counterStainTime.ElapsedTicks;
+        }
+
+        /// <summary>
+        /// Performs finding the greatest common divisor by Euclide's algorithm.
+        /// </summary>
+        /// <param name="firstNumber">
+        /// The first integer number.
+        /// </param>
+        /// <param name="secondNumber">
+        /// The second integer number.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        public static int FindGCDByEuclide(int firstNumber, int secondNumber)
+        {
+            int result = CoreFindGCDByEuclide(firstNumber, secondNumber);
+            return result;
+        }
+
+        /// <summary>
+        /// Performs finding the greatest common divisor by Euclide's algorithm.
+        /// </summary>
+        /// <param name="firstNumber">
+        /// The first integer number.
+        /// </param>
+        /// <param name="secondNumber">
+        /// The second integer number.
+        /// </param>
+        /// <param name="timeTicks">
+        /// The total elapsed time measured in timer ticks.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        public static int FindGCDByEuclide(int firstNumber, int secondNumber, out long timeTicks)
+        {
+            var counterTime = Stopwatch.StartNew();
+            int result = CoreFindGCDByEuclide(firstNumber, secondNumber);
+            timeTicks = counterTime.ElapsedTicks;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Performs finding the greatest common divisor by Euclide's algorithm.
+        /// </summary>
+        /// <param name="firstNumber">
+        /// The first integer number.
+        /// </param>
+        /// <param name="secondNumber">
+        /// The second integer number.
+        /// </param>
+        /// <param name="thirdNumber">
+        /// The third integer number.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        public static int FindGCDByEuclide(int firstNumber, int secondNumber, int thirdNumber)
+        {
+            int result = CoreFindGCDByEuclide(thirdNumber, CoreFindGCDByEuclide(firstNumber, secondNumber));
+            return result;
+        }
+
+        /// <summary>
+        /// Performs finding the greatest common divisor by Euclide's algorithm.
+        /// </summary>
+        /// <param name="firstNumber">
+        /// The first integer number.
+        /// </param>
+        /// <param name="secondNumber">
+        /// The second integer number.
+        /// </param>
+        /// <param name="thirdNumber">
+        /// The third integer number.
+        /// </param>
+        /// <param name="timeTicks">
+        /// The total elapsed time measured in timer ticks.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        public static int FindGCDByEuclide(int firstNumber, int secondNumber, int thirdNumber, out long timeTicks)
+        {
+            var counterTime = Stopwatch.StartNew();
+            int result = CoreFindGCDByEuclide(thirdNumber, CoreFindGCDByEuclide(firstNumber, secondNumber));
+            timeTicks = counterTime.ElapsedTicks;
+
+            return result;
+        }
+
+        /// <summary>
         /// Performs finding the greatest common divisor by Euclide's algorithm.
         /// </summary>
         /// <param name="numbers">
         /// Numbers for for which the greatest common divisor will be find.
         /// </param>
         /// <returns>
-        /// A 2-tuple as a value type with two field:
-        /// gcd - the greatest common for input numbers
-        /// executionTime - the total elapsed time measured by the current instance, in timer ticks.
+        /// The greatest common divisor for input numbers.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown when input data is null
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown when:
-        /// Input data contains zero.
-        /// Input data contains less than two numbers.
+        /// Thrown when input data contains less than two numbers.
         /// </exception>
-        public static (int gcd, long executionTime) FindGCDByEuclide(params int[] numbers)
+        public static int FindGCDByEuclide(params int[] numbers)
         {
-            var counterTime = Stopwatch.StartNew();
-
             CheckInputData(numbers);
 
-            int interimGCD = FindGCDByEuclide(numbers[0], numbers[1]);
-            int indexOfNextNumber = 2;
+            int result = CoreFindGCDByEuclideArray(numbers);
 
-            while (indexOfNextNumber < numbers.Length)
-            {
-                interimGCD = FindGCDByEuclide(interimGCD, numbers[indexOfNextNumber++]);
-            }
+            return result;
+        }
+
+        /// <summary>
+        /// Performs finding the greatest common divisor by Euclide's algorithm.
+        /// </summary>
+        /// <param name="numbers">
+        /// Numbers for for which the greatest common divisor will be find.
+        /// </param>
+        /// <param name="timeTicks">
+        /// The total elapsed time measured in timer ticks.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when input data is null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when input data contains less than two numbers.
+        /// </exception>
+        public static int FindGCDByEuclide(out long timeTicks, params int[] numbers)
+        {
+            CheckInputData(numbers);
+
+            var counterTime = Stopwatch.StartNew();
+
+            int result = CoreFindGCDByEuclideArray(numbers);
 
             counterTime.Stop();
 
-            long spendingTime = counterTime.ElapsedTicks;
-            var result = (gcd: interimGCD, executionTime: spendingTime);
+            timeTicks = counterTime.ElapsedTicks;            
+
+            return result;
+        }
+        
+        /// <summary>
+        /// Performs finding the greatest common divisor by Stain's algorithm.
+        /// </summary>
+        /// <param name="firstNumber">
+        /// The first integer number.
+        /// </param>
+        /// <param name="secondNumber">
+        /// The second integer number.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        public static int FindGCDByStain(int firstNumber, int secondNumber)
+        {
+            int result = CoreFindGCDByStain(firstNumber, secondNumber);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Performs finding the greatest common divisor by Stain's algorithm.
+        /// </summary>
+        /// <param name="firstNumber">
+        /// The first integer number.
+        /// </param>
+        /// <param name="secondNumber">
+        /// The second integer number.
+        /// </param>
+        /// <param name="timeTicks">
+        /// The total elapsed time measured in timer ticks.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        public static int FindGCDByStain(int firstNumber, int secondNumber, out long timeTicks)
+        {
+            var counterTime = Stopwatch.StartNew();
+            int result = CoreFindGCDByStain(firstNumber, secondNumber);
+            timeTicks = counterTime.ElapsedTicks;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Performs finding the greatest common divisor by Stain's algorithm.
+        /// </summary>
+        /// <param name="firstNumber">
+        /// The first integer number.
+        /// </param>
+        /// <param name="secondNumber">
+        /// The second integer number.
+        /// </param>
+        /// <param name="thirdNumber">
+        /// The third integer number.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        public static int FindGCDByStain(int firstNumber, int secondNumber, int thirdNumber)
+        {
+            int result = CoreFindGCDByStain(thirdNumber, CoreFindGCDByStain(firstNumber, secondNumber));
+
+            return result;
+        }
+        
+        /// <summary>
+        /// Performs finding the greatest common divisor by Stain's algorithm.
+        /// </summary>
+        /// <param name="firstNumber">
+        /// The first integer number.
+        /// </param>
+        /// <param name="secondNumber">
+        /// The second integer number.
+        /// </param>
+        /// <param name="thirdNumber">
+        /// The third integer number.
+        /// </param>
+        /// <param name="timeTicks">
+        /// The total elapsed time measured in timer ticks.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        public static int FindGCDByStain(int firstNumber, int secondNumber, int thirdNumber, out long timeTicks)
+        {
+            var counterTime = Stopwatch.StartNew();
+            int result = CoreFindGCDByStain(thirdNumber, CoreFindGCDByStain(firstNumber, secondNumber));
+            timeTicks = counterTime.ElapsedTicks;
 
             return result;
         }
@@ -56,72 +286,89 @@ namespace GCDAlgorithmsLogic
         /// Numbers for for which the greatest common divisor will be find.
         /// </param>
         /// <returns>
-        /// A 2-tuple as a value type with two field:
-        /// gcd - the greatest common for input numbers
-        /// executionTime - the total elapsed time measured by the current instance, in timer ticks.
+        /// The greatest common divisor for input numbers.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown when input data is null
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown when:
-        /// Input data contains zero.
-        /// Input data contains less than two numbers.
+        /// Thrown when input data contains less than two numbers.
         /// </exception>
-        public static (int gcd, long executionTime) FindGCDByStain(params int[] numbers)
-        {
-            var counterTime = Stopwatch.StartNew();
-
+        public static int FindGCDByStain(params int[] numbers)
+        {           
             CheckInputData(numbers);
 
-            int interimGCD = FindGCDByEuclide(numbers[0], numbers[1]);
-            int indexOfNextNumber = 2;
+            int result = CoreFindGCDByStainForArray(numbers);
 
-            while (indexOfNextNumber < numbers.Length)
-            {
-                interimGCD = FindGCDByStain(interimGCD, numbers[indexOfNextNumber++]);
-            }
+            return result;
+        }
+        
+        /// <summary>
+        /// Performs finding the greatest common divisor by Stain's algorithm.
+        /// </summary>
+        /// <param name="numbers">
+        /// Numbers for for which the greatest common divisor will be find.
+        /// </param>
+        /// <param name="timeTicks">
+        /// The total elapsed time measured in timer ticks.
+        /// </param>
+        /// <returns>
+        /// The greatest common divisor for input numbers.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when input data is null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when input data contains less than two numbers.
+        /// </exception>
+        public static int FindGCDByStain(out long timeTicks, params int[] numbers)
+        {
+            CheckInputData(numbers);
+
+            var counterTime = Stopwatch.StartNew();
+
+            int result = CoreFindGCDByStainForArray(numbers);           
 
             counterTime.Stop();
-           
-            long spendingTime = counterTime.ElapsedTicks;
-            var result = (gcd: interimGCD, executionTime: spendingTime);
+
+            timeTicks = counterTime.ElapsedTicks;            
 
             return result;          
         }
 
-        /// <summary>
-        /// Performs finding the greatest common divisor by  Euclide's and Stain's algorithms and in result gives the time of their execution.
-        /// </summary>
-        /// <param name="euclideTimeExecution">
-        /// The total elapsed time measured by the current instance, in timer ticks for  Euclide's algorithm.</param>
-        /// <param name="stainTimeExecution">
-        /// The total elapsed time measured by the current instance, in timer ticks for  Stain's algorithm.</param>
-        /// <param name="numbers">
-        /// Numbers for for which the time execution will be find.</param>
-        /// <exception cref="ArgumentNullException">
-        /// Thrown when input data is null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// Thrown when:
-        /// Input data contains zero.
-        /// Input data contains less than two numbers.
-        /// </exception>
-        public static void TakeTimeExecution(out long euclideTimeExecution, out long stainTimeExecution, params int[] numbers)
+
+        #region Core Stain
+        private static int CoreFindGCDByStainForArray(int[] numbers)
         {
-            // TODO ask about this: should I call it? Due to the fact this method will be call again in next two methods.
-            CheckInputData(numbers);
+            int interimGCD = CoreFindGCDByStain(numbers[0], numbers[1]);
+            int indexOfNextNumber = 2;
 
-            var euclideResult = FindGCDByEuclide(numbers);
-            var stainResult = FindGCDByStain(numbers);
+            while (indexOfNextNumber < numbers.Length)
+            {
+                interimGCD = CoreFindGCDByStain(interimGCD, numbers[indexOfNextNumber++]);
+            }
 
-            euclideTimeExecution = euclideResult.executionTime;
-            stainTimeExecution = euclideResult.gcd;
+            return interimGCD;
         }
 
-        private static int FindGCDByStain(int firstNumber, int secondNumber)
+        private static int CoreFindGCDByStain(int firstNumber, int secondNumber)
         {
             MakeAbsoluteNumbers(ref firstNumber, ref secondNumber);
+
+            if (firstNumber == 0)
+            {
+                return secondNumber;
+            }
+
+            if (secondNumber == 0)
+            {
+                return firstNumber;
+            }
+
+            if (firstNumber == secondNumber)
+            {
+                return firstNumber;
+            }
 
             int a = firstNumber;
             int b = secondNumber;
@@ -158,11 +405,41 @@ namespace GCDAlgorithmsLogic
 
             return b * disparity;
         }
+        #endregion Core Stain
 
-        private static int FindGCDByEuclide(int firstNumber, int secondNumber)
+        #region Core Euclide        
+        private static int CoreFindGCDByEuclideArray(int[] numbers)
+        {
+            int interimGCD = CoreFindGCDByEuclide(numbers[0], numbers[1]);
+            int indexOfNextNumber = 2;
+
+            while (indexOfNextNumber < numbers.Length)
+            {
+                interimGCD = CoreFindGCDByEuclide(interimGCD, numbers[indexOfNextNumber++]);
+            }
+
+            return interimGCD;
+        }
+
+        private static int CoreFindGCDByEuclide(int firstNumber, int secondNumber)
         {
             MakeAbsoluteNumbers(ref firstNumber, ref secondNumber);
 
+            if (firstNumber == 0)
+            {
+                return secondNumber;
+            }
+
+            if (secondNumber == 0)
+            {
+                return firstNumber;
+            }
+
+            if (firstNumber == secondNumber)
+            {
+                return firstNumber;
+            }
+            
             int a = firstNumber;
             int b = secondNumber;
 
@@ -181,6 +458,7 @@ namespace GCDAlgorithmsLogic
 
             return a;
         }
+        #endregion Core Euclide
 
         private static void MakeAbsoluteNumbers(ref int firstNumber, ref int secondNumber)
         {
@@ -198,11 +476,6 @@ namespace GCDAlgorithmsLogic
             if (numbers.Length < 2)
             {
                 throw new ArgumentException($"Unable to find GCD for single number. The length of {nameof(numbers)} must be more than 2.");
-            }
-
-            if (Array.IndexOf(numbers, 0) != -1)
-            {
-                throw new ArgumentException($"The {nameof(numbers)} must not contain zero.");
             }
         }
     }

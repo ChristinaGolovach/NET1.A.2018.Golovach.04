@@ -80,14 +80,14 @@ namespace TransformLogic
             }                
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-Us");
-            char[] symbolsOfNumber = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'E', '.', '-', '+' };
+            string symbolsOfNumber = "0123456789E.-+";
             string[] wordsOfSymbols = new string[] { "zero ", "one ", "two ", "three ", "four ", "five ", "six ", "seven ", "eight ", "nine ", "E ", "point ", "minus ", "plus " };
             string numberInStringView = number.ToString();
             StringBuilder numberInWordView = new StringBuilder();
 
             foreach (char symbol in numberInStringView)
             {
-                int index = Array.IndexOf(symbolsOfNumber, symbol);
+                int index = symbolsOfNumber.IndexOf(symbol);
                 numberInWordView.Append(wordsOfSymbols[index]);
             }
 
