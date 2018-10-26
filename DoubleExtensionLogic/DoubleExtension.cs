@@ -7,8 +7,6 @@ namespace DoubleExtensionLogic
     /// </summary>
     public static class DoubleExtension
     {
-        private static readonly int COUNTBITSINDOUBLE = 64;
-
         /// <summary>
         /// Performs the converting of double value to IEEE754 format.
         /// </summary>
@@ -19,11 +17,12 @@ namespace DoubleExtensionLogic
         /// </returns>
         public static string DoubleToIEEE754(this double number)
         {
+            int sizeDoubleInBits = sizeof(double) * 8;
             DoubleToLong doubleInLong = new DoubleToLong() { PlaceForDouble = number };
             long numberInLong = doubleInLong.PlaceForLong;
-            char[] bitsOfNumber = new char[COUNTBITSINDOUBLE];
+            char[] bitsOfNumber = new char[sizeDoubleInBits];
 
-            for (int i = COUNTBITSINDOUBLE - 1; i >= 0; i--)
+            for (int i = sizeDoubleInBits - 1; i >= 0; i--)
             {
                 bitsOfNumber[i] = (numberInLong & 1) == 1 ? '1' : '0';
                 numberInLong = numberInLong >> 1;

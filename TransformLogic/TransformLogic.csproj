@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ITransformer.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransformerToIEEE.cs" />
+    <Compile Include="TransformerToWord.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DoubleExtensionLogic\DoubleExtensionLogic.csproj">
