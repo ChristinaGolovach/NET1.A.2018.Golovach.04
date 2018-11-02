@@ -9,7 +9,7 @@ namespace GCDAlgorithmsLogic
     /// <param name="firstNumber"></param>
     /// <param name="secondNumber"></param>
     /// <returns></returns>
-    public delegate int GDBForTwoNumber(int firstNumber, int secondNumber);
+    public delegate int GCBForTwoNumber(int firstNumber, int secondNumber);
    
     /// <summary>
     /// Represents a class for finding the greatest common divisor by Euclide's and Stain's algorithms.
@@ -330,14 +330,14 @@ namespace GCDAlgorithmsLogic
             return result;          
         }
                 
-        private static int CoreFindGCDBForArray(GDBForTwoNumber gbdForTwoNumber, int[] numbers)
+        private static int CoreFindGCDBForArray(GCBForTwoNumber gcdForTwoNumber, int[] numbers)
         {
-            int interimGCD = gbdForTwoNumber(numbers[0], numbers[1]);
+            int interimGCD = gcdForTwoNumber(numbers[0], numbers[1]);
             int indexOfNextNumber = 2;
 
             while (indexOfNextNumber < numbers.Length)
             {
-                interimGCD = gbdForTwoNumber(interimGCD, numbers[indexOfNextNumber++]);
+                interimGCD = gcdForTwoNumber(interimGCD, numbers[indexOfNextNumber++]);
             }
 
             return interimGCD;
