@@ -4,6 +4,14 @@ using System.Diagnostics;
 namespace GCDAlgorithmsLogic
 {
     /// <summary>
+    /// Delegate for the method <see cref="CoreFindGCDBForArray"/>
+    /// </summary>
+    /// <param name="firstNumber"></param>
+    /// <param name="secondNumber"></param>
+    /// <returns></returns>
+    public delegate int GDBForTwoNumber(int firstNumber, int secondNumber);
+   
+    /// <summary>
     /// Represents a class for finding the greatest common divisor by Euclide's and Stain's algorithms.
     /// </summary>
     public static class GCD
@@ -29,13 +37,13 @@ namespace GCDAlgorithmsLogic
 
             var counterEuclideTime = Stopwatch.StartNew();
 
-            CoreFindGCDByEuclideArray(numbers);
+            CoreFindGCDBForArray(CoreFindGCDByEuclide, numbers);
 
             euclideTime = counterEuclideTime.ElapsedTicks;
 
             var counterStainTime = Stopwatch.StartNew();
 
-            CoreFindGCDByStainForArray(numbers);
+            CoreFindGCDBForArray(CoreFindGCDByStain, numbers);
 
             stainTime = counterStainTime.ElapsedTicks;
         }
@@ -53,10 +61,7 @@ namespace GCDAlgorithmsLogic
         /// The greatest common divisor for input numbers.
         /// </returns>
         public static int FindGCDByEuclide(int firstNumber, int secondNumber)
-        {
-            int result = CoreFindGCDByEuclide(firstNumber, secondNumber);
-            return result;
-        }
+            => CoreFindGCDByEuclide(firstNumber, secondNumber);
 
         /// <summary>
         /// Performs finding the greatest common divisor by Euclide's algorithm.
@@ -98,10 +103,7 @@ namespace GCDAlgorithmsLogic
         /// The greatest common divisor for input numbers.
         /// </returns>
         public static int FindGCDByEuclide(int firstNumber, int secondNumber, int thirdNumber)
-        {
-            int result = CoreFindGCDByEuclide(thirdNumber, CoreFindGCDByEuclide(firstNumber, secondNumber));
-            return result;
-        }
+            => CoreFindGCDByEuclide(thirdNumber, CoreFindGCDByEuclide(firstNumber, secondNumber));
 
         /// <summary>
         /// Performs finding the greatest common divisor by Euclide's algorithm.
@@ -149,7 +151,7 @@ namespace GCDAlgorithmsLogic
         {
             CheckInputData(numbers);
 
-            int result = CoreFindGCDByEuclideArray(numbers);
+            int result = CoreFindGCDBForArray(FindGCDByEuclide, numbers);
 
             return result;
         }
@@ -178,7 +180,7 @@ namespace GCDAlgorithmsLogic
 
             var counterTime = Stopwatch.StartNew();
 
-            int result = CoreFindGCDByEuclideArray(numbers);
+            int result = CoreFindGCDBForArray(FindGCDByEuclide, numbers);
 
             counterTime.Stop();
 
@@ -200,11 +202,7 @@ namespace GCDAlgorithmsLogic
         /// The greatest common divisor for input numbers.
         /// </returns>
         public static int FindGCDByStain(int firstNumber, int secondNumber)
-        {
-            int result = CoreFindGCDByStain(firstNumber, secondNumber);
-
-            return result;
-        }
+            => CoreFindGCDByStain(firstNumber, secondNumber);
 
         /// <summary>
         /// Performs finding the greatest common divisor by Stain's algorithm.
@@ -246,11 +244,7 @@ namespace GCDAlgorithmsLogic
         /// The greatest common divisor for input numbers.
         /// </returns>
         public static int FindGCDByStain(int firstNumber, int secondNumber, int thirdNumber)
-        {
-            int result = CoreFindGCDByStain(thirdNumber, CoreFindGCDByStain(firstNumber, secondNumber));
-
-            return result;
-        }
+            => CoreFindGCDByStain(thirdNumber, CoreFindGCDByStain(firstNumber, secondNumber));
         
         /// <summary>
         /// Performs finding the greatest common divisor by Stain's algorithm.
@@ -298,7 +292,7 @@ namespace GCDAlgorithmsLogic
         {           
             CheckInputData(numbers);
 
-            int result = CoreFindGCDByStainForArray(numbers);
+            int result = CoreFindGCDBForArray(FindGCDByStain, numbers);
 
             return result;
         }
@@ -327,7 +321,7 @@ namespace GCDAlgorithmsLogic
 
             var counterTime = Stopwatch.StartNew();
 
-            int result = CoreFindGCDByStainForArray(numbers);           
+            int result = CoreFindGCDBForArray(CoreFindGCDByStain, numbers);         
 
             counterTime.Stop();
 
@@ -335,22 +329,21 @@ namespace GCDAlgorithmsLogic
 
             return result;          
         }
-
-
-        #region Core Stain
-        private static int CoreFindGCDByStainForArray(int[] numbers)
+                
+        private static int CoreFindGCDBForArray(GDBForTwoNumber gbdForTwoNumber, int[] numbers)
         {
-            int interimGCD = CoreFindGCDByStain(numbers[0], numbers[1]);
+            int interimGCD = gbdForTwoNumber(numbers[0], numbers[1]);
             int indexOfNextNumber = 2;
 
             while (indexOfNextNumber < numbers.Length)
             {
-                interimGCD = CoreFindGCDByStain(interimGCD, numbers[indexOfNextNumber++]);
+                interimGCD = gbdForTwoNumber(interimGCD, numbers[indexOfNextNumber++]);
             }
 
             return interimGCD;
         }
-
+        
+        #region Core Stain
         private static int CoreFindGCDByStain(int firstNumber, int secondNumber)
         {
             MakeAbsoluteNumbers(ref firstNumber, ref secondNumber);
@@ -407,20 +400,7 @@ namespace GCDAlgorithmsLogic
         }
         #endregion Core Stain
 
-        #region Core Euclide        
-        private static int CoreFindGCDByEuclideArray(int[] numbers)
-        {
-            int interimGCD = CoreFindGCDByEuclide(numbers[0], numbers[1]);
-            int indexOfNextNumber = 2;
-
-            while (indexOfNextNumber < numbers.Length)
-            {
-                interimGCD = CoreFindGCDByEuclide(interimGCD, numbers[indexOfNextNumber++]);
-            }
-
-            return interimGCD;
-        }
-
+        #region Core Euclide 
         private static int CoreFindGCDByEuclide(int firstNumber, int secondNumber)
         {
             MakeAbsoluteNumbers(ref firstNumber, ref secondNumber);
