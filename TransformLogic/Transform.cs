@@ -37,16 +37,7 @@ namespace TransformLogic
         {
             CheckInputData(numbers, transformer);
 
-            int i = 0;
-            string[] numbersInWordsView = new string[numbers.Length];
-            
-            foreach (double number in numbers)
-            {
-                numbersInWordsView[i] = transformer.TransformTo(number);
-                i++;
-            }
-
-            return numbersInWordsView;
+            return TransformDoube(numbers, transformer.TransformTo);
         }
 
         /// <summary>
