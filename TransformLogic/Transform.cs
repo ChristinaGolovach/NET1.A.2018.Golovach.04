@@ -25,7 +25,7 @@ namespace TransformLogic
         /// <exception cref="ArgumentException">
         /// Thrown when the input array is empty.
         /// </exception>
-        public static TOutput[] TransformTo<TInput, TOutput>(TInput[] numbers, ITransformer<TInput, TOutput> transformer)
+        public static TOutput[] TransformTo<TInput, TOutput>(this TInput[] numbers, ITransformer<TInput, TOutput> transformer)
         {
             CheckInputData(numbers, transformer);
 
@@ -49,7 +49,7 @@ namespace TransformLogic
         /// <exception cref="ArgumentException">
         /// Thrown when the input array is empty.
         /// </exception>
-        public static TOutput[] TransformTo<TInput, TOutput>(TInput[] numbers, Func<TInput, TOutput> transformer)
+        public static TOutput[] TransformTo<TInput, TOutput>(this TInput[] numbers, Func<TInput, TOutput> transformer)
         {
             CheckInputData(numbers, transformer);
 
@@ -74,6 +74,8 @@ namespace TransformLogic
         /// <returns></returns>
         public static TSource[] Filter<TSource>(this TSource[] inputSet, IPredicate<TSource> predicate)
         {
+            CheckInputData(inputSet, predicate);
+
             return Filter(inputSet, predicate.IsMatch);
         }
 
@@ -86,6 +88,8 @@ namespace TransformLogic
         /// <returns></returns>
         public static TSource[] Filter<TSource>(this TSource[] inputSet, Predicate<TSource> predicate) 
         {
+            CheckInputData(inputSet, predicate);
+
             List<TSource> resultSet = new List<TSource>();
 
             foreach(TSource input in inputSet)
@@ -117,6 +121,20 @@ namespace TransformLogic
             }
 
             CheckInputData(numbers);
+        }
+
+        private static void CheckInputData<TSource>(TSource[] inputSet, IPredicate<TSource> predicate)
+        {
+            inputSet = inputSet ?? throw new ArgumentNullException($"The {nameof(inputSet)} can not be null.");
+
+            predicate = predicate ?? throw new ArgumentNullException($"The {nameof(predicate)} can not be null.");
+        }
+
+        private static void CheckInputData<TSource>(TSource[] inputSet, Predicate<TSource> predicate)
+        {
+            inputSet = inputSet ?? throw new ArgumentNullException($"The {nameof(inputSet)} can not be null.");
+
+            predicate = predicate ?? throw new ArgumentNullException($"The {nameof(predicate)} can not be null.");
         }
 
         private static void CheckInputData<TInput>(TInput[] numbers)

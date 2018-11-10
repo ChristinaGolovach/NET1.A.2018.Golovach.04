@@ -78,7 +78,15 @@ namespace TransformLogic.Tests
         [TestCase(new int[] { 13, 3326, 243, 5, -78, 13 }, ExpectedResult = new int[] { 13, 3326, 243, 13 })]
         [TestCase(new int[] { 1, 0, 4, 58, 8 }, ExpectedResult = new int[] { })]
         public int[] Filter_PassIntArrayAndIPredicate_ReturnArrayOnlyNumbersWithDigitTree(int[] source)
-              => source.Filter(new IntHasThreePredicate());
+            => source.Filter(new IntHasThreePredicate());
+
+        [TestCase(new int[] { 1, 0, 4, 58, 8 })]
+        public void Filter_PassIntArrayAndNullIPredicate_ThrownException(int[] source)
+            => Assert.Throws<ArgumentNullException>(() => source.Filter((IPredicate<int>)null));
+
+        [Test]
+        public void Filter_PassIntArrayAndNullArray_ThrownException()
+            => Assert.Throws<ArgumentNullException>(() => Transform.Filter(null, new IntEvenPredicate()));
 
         [Test]
         public void  Filter_PassStringArrayAndIPredicate_ReturnArrayOnlyStringsWithLengthMoreTree()
