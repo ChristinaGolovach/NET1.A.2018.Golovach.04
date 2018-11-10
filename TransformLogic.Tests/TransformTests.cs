@@ -39,7 +39,7 @@ namespace TransformLogic.Tests
         public void TransformDoube_PassDoubleValueAndNullTransdormer_TrownArgumentNullException(double[] numbers)
             => Assert.Throws<ArgumentNullException>(() => Transform.TransformTo(numbers, (ITransformer<double, string>) null));
 
-        #region Tests for method with delegate              
+        #region Tests for transform method with delegate              
 
         [TestCase(new double[] { -23.809999 }, ExpectedResult = new string[] { "minus two three point eight zero nine nine nine nine" })]
         [TestCase(new double[] { -23.809, 0.295, 15.17, 0 }, ExpectedResult = new string[] { "minus two three point eight zero nine", "zero point two nine five", "one five point one seven", "zero" })]
@@ -67,7 +67,7 @@ namespace TransformLogic.Tests
         //public void TransformDoubeWithDelegateVersion_PassDoubleValueAndNullTransdormer_TrownArgumentNullException(double[] numbers)
         //        => Assert.Throws<ArgumentNullException>(() => Transform.TransformTo(numbers, transformdelegate));
 
-        #endregion Tests for method with delegate 
+        #endregion Tests for transform method with delegate 
 
         #region Filter with IPredicate
         [TestCase(new int[] { 1, 26, 24, 5, -78, 1 }, ExpectedResult = new int[] { 26, 24, -78 })]
@@ -77,6 +77,7 @@ namespace TransformLogic.Tests
 
         [TestCase(new int[] { 13, 3326, 243, 5, -78, 13 }, ExpectedResult = new int[] { 13, 3326, 243, 13 })]
         [TestCase(new int[] { 1, 0, 4, 58, 8 }, ExpectedResult = new int[] { })]
+        [TestCase(new int[] { }, ExpectedResult = new int[] { })]
         public int[] Filter_PassIntArrayAndIPredicate_ReturnArrayOnlyNumbersWithDigitTree(int[] source)
             => source.Filter(new IntHasThreePredicate());
 
