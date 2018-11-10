@@ -1,10 +1,10 @@
 ﻿namespace TransformLogic
 {
     /// <summary>
-    /// Contract to transform double number to string
+    /// Contract for transform TInput value to TOutput value
     /// </summary>
-    public interface ITransformer
+    public interface ITransformer<in TInput, out TOutput>
     {
-        string TransformTo(double number);
+        TOutput TransformTo(TInput number);
     }
 }

@@ -3,15 +3,6 @@
 namespace TransformLogic
 {
     /// <summary>
-    /// Delegate for method <see cref="TransformDoube"/>.
-    /// </summary>
-    /// <param name="number">Number for transformation.</param>
-    /// <returns>
-    /// Result of transformation.
-    /// </returns>
-    public delegate string Transformer(double number);
-
-    /// <summary>
     /// Represent a class that works with Double type and performs the transforming array of numbers according to transformer.
     /// </summary>
     public static class Transform
@@ -33,11 +24,11 @@ namespace TransformLogic
         /// <exception cref="ArgumentException">
         /// Thrown when the input array is empty.
         /// </exception>
-        public static string[] TransformDoube(double[] numbers, ITransformer transformer)
+        public static TOutput[] TransformTo<TInput, TOutput>(TInput[] numbers, ITransformer<TInput, TOutput> transformer)
         {
             CheckInputData(numbers, transformer);
 
-            return TransformDoube(numbers, transformer.TransformTo);
+            return TransformTo(numbers, transformer.TransformTo);
         }
 
         /// <summary>
@@ -57,25 +48,25 @@ namespace TransformLogic
         /// <exception cref="ArgumentException">
         /// Thrown when the input array is empty.
         /// </exception>
-        public static string[] TransformDoube(double[] numbers, Transformer transformer)
+        public static TOutput[] TransformTo<TInput, TOutput>(TInput[] numbers, Func<TInput, TOutput> transformer)
         {
             CheckInputData(numbers, transformer);
 
             int i = 0;
-            string[] numbersInWordsView = new string[numbers.Length];
+            TOutput[] numbersInNewView = new TOutput[numbers.Length];
 
-            foreach (double number in numbers)
+            foreach (TInput number in numbers)
             {
-                numbersInWordsView[i] = transformer(number);
+                numbersInNewView[i] = transformer(number);
                 i++;
             }
 
-            return numbersInWordsView;
+            return numbersInNewView;
         }
 
-        private static void CheckInputData(double[] numbers, ITransformer transformer)
+        private static void CheckInputData<TInput, TOutput>(TInput[] numbers, ITransformer<TInput, TOutput> transformer)
         {
-            if (transformer == null)
+            if (ReferenceEquals(transformer, null))
             {
                 throw new ArgumentNullException($"The {nameof(transformer)} is null.");
             }
@@ -83,9 +74,9 @@ namespace TransformLogic
             CheckInputData(numbers);
         }
 
-        private static void CheckInputData(double[] numbers, Transformer transformer)
+        private static void CheckInputData<TInput, TOutput>(TInput[] numbers, Func<TInput, TOutput> transformer)
         {
-            if (transformer == null)
+            if (ReferenceEquals(transformer, null))
             {
                 throw new ArgumentNullException($"The {nameof(transformer)} is null.");
             }
@@ -93,9 +84,9 @@ namespace TransformLogic
             CheckInputData(numbers);
         }
 
-        private static void CheckInputData(double[] numbers)
+        private static void CheckInputData<TInput>(TInput[] numbers)
         {
-            if (numbers == null)
+            if (ReferenceEquals(numbers, null))
             {
                 throw new ArgumentNullException($"The {nameof(numbers)} is null.");
             }

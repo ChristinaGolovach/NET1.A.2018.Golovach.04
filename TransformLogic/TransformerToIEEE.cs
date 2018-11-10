@@ -2,7 +2,7 @@
 
 namespace TransformLogic
 {
-    public class TransformerToIEEE : ITransformer
+    public class TransformerToIEEE : ITransformer<double, string>
     {
         public string TransformTo(double number)
         {

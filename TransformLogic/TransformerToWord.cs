@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace TransformLogic
 {
-    public class TransformerToWord : ITransformer
+    public class TransformerToWord : ITransformer<double, string>
     {
         public string TransformTo(double number)
         {
