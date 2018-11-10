@@ -1,6 +1,6 @@
 ﻿namespace TransformLogic
 {
-    public interface IPredicate<TSource>
+    public interface IPredicate<in TSource>
     {
         bool IsMatch(TSource source);
     }
