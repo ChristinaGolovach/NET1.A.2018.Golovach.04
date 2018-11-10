@@ -71,9 +71,83 @@ namespace TransformLogic.Tests
 
         #region Filter with IPredicate
         [TestCase(new int[] { 1, 26, 24, 5, -78, 1 }, ExpectedResult = new int[] { 26, 24, -78 })]
+        [TestCase(new int[] { 1, 0, 4, 58, 8 }, ExpectedResult = new int[] { 4, 58, 8 })]
         public int[] Filter_PassIntArrayAndIPredicate_ReturnArrayOnlyEvenNumbers(int[] source)
-            => Transform.Filter(source, new IntEvenPredicate());
+            => source.Filter(new IntEvenPredicate());
 
-        #endregion
+        [TestCase(new int[] { 13, 3326, 243, 5, -78, 13 }, ExpectedResult = new int[] { 13, 3326, 243, 13 })]
+        [TestCase(new int[] { 1, 0, 4, 58, 8 }, ExpectedResult = new int[] { })]
+        public int[] Filter_PassIntArrayAndIPredicate_ReturnArrayOnlyNumbersWithDigitTree(int[] source)
+              => source.Filter(new IntHasThreePredicate());
+
+        [Test]
+        public void  Filter_PassStringArrayAndIPredicate_ReturnArrayOnlyStringsWithLengthMoreTree()
+        {
+            // Arrange
+            string[] inputArray = new[] { "aaaa", "aa", "a", "", "aaaaa" };
+            string[] exppectedResult = new[] { "aaaa", "aaaaa" };
+
+            // Act
+            string[] actualResult = inputArray.Filter(new StringLenghtMoreThreePredicate());
+
+            // Assert
+            CollectionAssert.AreEqual(exppectedResult, actualResult);        
+        }
+
+        [Test]
+        public void Filter_PassStringArrayAndIPredicate_ReturnArrayOnlyStringsStartWithA()
+        {
+            // Arrange
+            string[] inputArray = new[] { "ABBB", "BBBB", "ADD", "", "DAAA" };
+            string[] exppectedResult = new[] { "ABBB", "ADD" };
+
+            // Act
+            string[] actualResult = inputArray.Filter(new StringStartWithAPredicate());
+
+            // Assert
+            CollectionAssert.AreEqual(exppectedResult, actualResult);
+        }
+        #endregion Filter with IPredicate
+
+        #region Filter with Predicate delegate
+        [TestCase(new int[] { 1, 26, 24, 5, -78, 1 }, ExpectedResult = new int[] { 26, 24, -78 })]
+        [TestCase(new int[] { 1, 0, 4, 58, 8 }, ExpectedResult = new int[] { 4, 58, 8 })]
+        public int[] Filter_PassIntArrayAndPredicateDelegate_ReturnArrayOnlyEvenNumbers(int[] source)
+           => source.Filter(IntPredicates.IsEven);
+
+        [TestCase(new int[] { 13, 3326, 243, 5, -78, 13 }, ExpectedResult = new int[] { 13, 3326, 243, 13 })]
+        [TestCase(new int[] { 1, 0, 4, 58, 8 }, ExpectedResult = new int[] { })]
+        public int[] Filter_PassIntArrayAndPredicateDelegate_ReturnArrayOnlyNumbersWithDigitTree(int[] source)
+              => source.Filter(IntPredicates.IsHasThreeDigit);
+
+        [Test]
+        public void Filter_PassStringArrayAndPredicateDelegate_ReturnArrayOnlyStringsWithLengthMoreTree()
+        {
+            // Arrange
+            string[] inputArray = new[] { "aaaa", "aa", "a", "", "aaaaa" };
+            string[] exppectedResult = new[] { "aaaa", "aaaaa" };
+
+            // Act
+            string[] actualResult = inputArray.Filter(StringPredicates.IsLengthMoreThree);
+
+            // Assert
+            CollectionAssert.AreEqual(exppectedResult, actualResult);
+        }
+
+        [Test]
+        public void Filter_PassStringArrayAndPredicateDelegate_ReturnArrayOnlyStringsStartWithA()
+        {
+            // Arrange
+            string[] inputArray = new[] { "ABBB", "BBBB", "ADD", "", "DAAA" };
+            string[] exppectedResult = new[] { "ABBB", "ADD" };
+
+            // Act
+            string[] actualResult = inputArray.Filter(StringPredicates.IsStartWithA);
+
+            // Assert
+            CollectionAssert.AreEqual(exppectedResult, actualResult);
+        }
+        #endregion Filter with Predicate delegate
+
     }
 }

@@ -27,6 +27,11 @@
 
         public static bool IsEven(int number)
         {
+            if (number == 0)
+            {
+                return false;
+            }
+
             return number % 2 == 0 ? true : false;
         }
     }
