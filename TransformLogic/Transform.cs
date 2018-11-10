@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TransformLogic
 {
@@ -62,6 +63,40 @@ namespace TransformLogic
             }
 
             return numbersInNewView;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="inputSet"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static TSource[] Filter<TSource>(this TSource[] inputSet, IPredicate<TSource> predicate)
+        {
+            return Filter(inputSet, predicate.IsMatch);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="inputSet"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static TSource[] Filter<TSource>(this TSource[] inputSet, Predicate<TSource> predicate) 
+        {
+            List<TSource> resultSet = new List<TSource>();
+
+            foreach(TSource input in inputSet)
+            {
+                if (predicate(input))
+                {
+                    resultSet.Add(input);
+                }
+            }
+
+            return resultSet.ToArray();
         }
 
         private static void CheckInputData<TInput, TOutput>(TInput[] numbers, ITransformer<TInput, TOutput> transformer)

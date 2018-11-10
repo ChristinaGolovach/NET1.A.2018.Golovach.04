@@ -40,11 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ITransformer.cs" />
+    <Compile Include="Implementations\IntPredicates.cs" />
+    <Compile Include="Implementations\StringPredicates.cs" />
+    <Compile Include="Interfaces\IPredicate.cs" />
+    <Compile Include="Interfaces\ITransformer.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TransformerToIEEE.cs" />
-    <Compile Include="TransformerToWord.cs" />
+    <Compile Include="Implementations\TransformerToIEEE.cs" />
+    <Compile Include="Implementations\TransformerToWord.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DoubleExtensionLogic\DoubleExtensionLogic.csproj">

@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using DoubleExtensionLogic;
+using TransformLogic.Implementations;
 
 namespace TransformLogic.Tests
 {
@@ -67,5 +68,12 @@ namespace TransformLogic.Tests
         //        => Assert.Throws<ArgumentNullException>(() => Transform.TransformTo(numbers, transformdelegate));
 
         #endregion Tests for method with delegate 
+
+        #region Filter with IPredicate
+        [TestCase(new int[] { 1, 26, 24, 5, -78, 1 }, ExpectedResult = new int[] { 26, 24, -78 })]
+        public int[] Filter_PassIntArrayAndIPredicate_ReturnArrayOnlyEvenNumbers(int[] source)
+            => Transform.Filter(source, new IntEvenPredicate());
+
+        #endregion
     }
 }
