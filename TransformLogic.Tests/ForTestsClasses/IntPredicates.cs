@@ -1,4 +1,4 @@
-﻿namespace TransformLogic.Implementations
+﻿namespace TransformLogic.Tests.ForTestsClasses
 {
     public class IntEvenPredicate : IPredicate<int>
     {
@@ -22,7 +22,7 @@
         {
             string numberInStringView = number.ToString();
             int index = numberInStringView.IndexOf("3");
-            return index != -1 ? true : false; 
+            return index != -1 ? true : false;
         }
 
         public static bool IsEven(int number)

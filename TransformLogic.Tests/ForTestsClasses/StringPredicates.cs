@@ -1,4 +1,4 @@
-﻿namespace TransformLogic.Implementations
+﻿namespace TransformLogic.Tests.ForTestsClasses
 {
     public class StringStartWithAPredicate : IPredicate<string>
     {

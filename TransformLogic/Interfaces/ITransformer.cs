@@ -5,6 +5,6 @@
     /// </summary>
     public interface ITransformer<in TInput, out TOutput>
     {
-        TOutput TransformTo(TInput number);
+        TOutput Transform(TInput number);
     }
 }
